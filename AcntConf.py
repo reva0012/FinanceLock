@@ -19,7 +19,3 @@ def acnt_conf():
 
 	close_button = Button (top_accnf, text = "Close", command = top_accnf.destroy)
 	close_button_win = my_canvas.create_window(400, 350, window = close_button)
-
-	#delete
-	next_button = Button (top_accnf, text = "Next", command = create_loan())
-	next_button_win = my_canvas.create_window(600, 350, window = next_button)
