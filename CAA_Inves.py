@@ -3,8 +3,25 @@ from PIL import ImageTk, Image
 from tkinter import filedialog
 from User_Pass_Inves import *
 from validate_email import validate_email
+import pyrebase
+
 
 def open_caa_inves():
+
+	firebase_config = {
+		"apiKey" : "AIzaSyCvuNFssXW4k1cHifCRH_-KP6IPuxJHzqk",
+	    "authDomain" : "financelock-c6ea8.firebaseapp.com",
+	    "databaseURL" : "https://financelock-c6ea8-default-rtdb.firebaseio.com",
+	    "projectId" : "financelock-c6ea8",
+	    "storageBucket" : "financelock-c6ea8.appspot.com",
+	    "messagingSenderId" : "523873568466",
+	    "appId" : "1:523873568466:web:b4259e5cb0e1c85059cf0b",
+	    "measurementId" : "Gender-R1R8CZD552"
+	}
+	
+	firebase = pyrebase.initialize_app(firebase_config)
+
+	db = firebase.database()
 
 	def next_but():
 
@@ -150,8 +167,13 @@ def open_caa_inves():
 				break
 
 		if chk_cnt == 1 and t1:
-			#backend here
-			user_pass_inves()
+			name = e_fname.get() + " " + e_lname.get()
+			perm_add = e_peadd.get() + " " + e_pepb.get() + " " + e_pest.get() + " " + e_pecnt.get()
+			pr_add = e_pradd.get() + " " + e_prpb.get() + " " + e_prst.get() + " " + e_prcnt.get()
+			
+			data_good = {'name': name,'dob': e_dob.get(), 'gender': click_gen.get(), 'proof_id': click_pid.get(), 'doc_num': e_doc.get(), 'issue_date': e_idate.get(), 'expiry_date': e_edate.get(), 'salary': e_sal.get(), 'salary_cert': e_salc.get(), 'permanent_address': perm_add, 'present_address': pr_add}
+			db.child("People").child("Investor").push(data_good)	
+			user_pass_inves(e_email.get())
 			top_cain.destroy()
 
 	def select():
@@ -254,7 +276,7 @@ def open_caa_inves():
 	e_salc = Entry(top_cain, width = 50, borderwidth = 2)
 	#e_salc.insert(0, "Salary Certificate")
 	e_salc_win = my_canvas.create_window(975, 325, window = e_salc)
-	salc_button = Button (top_cain, text = "Select", command = select)
+	salc_button = Button (top_cain, text = "Select", command = select, background = "white", highlightbackground = "black", highlightthickness = 2)
 	salc_button_win = my_canvas.create_window(1165, 325, window = salc_button)
 	top_cain.grab_set()
 
@@ -302,11 +324,11 @@ def open_caa_inves():
 	#e_prcnt.insert(0, "Country")
 	e_prcnt_win = my_canvas.create_window(975, 575, window = e_prcnt)
 
-	next_button = Button (top_cain, text = "Next", command = next_but)
+	next_button = Button (top_cain, text = "Next", command = next_but, background = "white", highlightbackground = "black", highlightthickness = 2)
 	next_button_win = my_canvas.create_window(900, 650, window = next_button)
 
-	goback_button = Button (top_cain, text = "Back", command = top_cain.destroy)
+	goback_button = Button (top_cain, text = "Back", command = top_cain.destroy, background = "white", highlightbackground = "black", highlightthickness = 2)
 	goback_button_win = my_canvas.create_window(300, 650, window = goback_button)
 
-	res_button = Button (top_cain, text = "Reset Fields", command = clear)
+	res_button = Button (top_cain, text = "Reset Fields", command = clear, background = "white", highlightbackground = "black", highlightthickness = 2)
 	res_button_win = my_canvas.create_window(600, 650, window = res_button)
