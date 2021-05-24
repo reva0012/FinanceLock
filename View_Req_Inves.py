@@ -41,6 +41,15 @@ def view_req(Uid):
 		vr_coll.configure(state = 'normal')
 		#vr_emp.configure(state = 'normal')
 		#vr_ocp.configure(state = 'normal')
+		
+		vr_name.delete(0, END)
+		vr_age.delete(0, END)
+		vr_ltype.delete(0, END)
+		vr_amt.delete(0, END)
+		vr_sal.delete(0, END)
+		vr_coll.delete(0, END)
+		#vr_emp.delete(0, END)
+		#vr_ocp.delete(0, END)
 
 		vr_name.insert(0, customer['name'])
 		vr_age.insert(0, customer['dob'])
