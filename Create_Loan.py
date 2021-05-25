@@ -33,6 +33,10 @@ def create_loan(Uid):
 					UIid = r.key()
 			data_good = {'type': cr_type.get(),'amt': cr_amt.get(), 'collateral': cr_coll.get(), 'date': cr_date.get(), 'uniqueCid': Uid, 'uniqueIid': UIid, 'status': "Processing"}
 			db.child("Loan").child("Request").push(data_good)
+			
+			data = {'uniqueInvid': UIid, 'uniqueCid': Uid}
+			db.child("CustandInv").push(data)
+			
 			top_cr_l.destroy()
 
 	def back():
