@@ -171,7 +171,7 @@ def open_caa_inves():
 			perm_add = e_peadd.get() + " " + e_pepb.get() + " " + e_pest.get() + " " + e_pecnt.get()
 			pr_add = e_pradd.get() + " " + e_prpb.get() + " " + e_prst.get() + " " + e_prcnt.get()
 			
-			data_good = {'name': name,'dob': e_dob.get(), 'gender': click_gen.get(), 'proof_id': click_pid.get(), 'doc_num': e_doc.get(), 'issue_date': e_idate.get(), 'expiry_date': e_edate.get(), 'salary': e_sal.get(), 'salary_cert': e_salc.get(), 'permanent_address': perm_add, 'present_address': pr_add}
+			data_good = {'name': name,'dob': e_dob.get(), 'gender': click_gen.get(), 'proof_id': click_pid.get(), 'phone_no': e_pno.get(), 'employed': click_emp.get(), 'occupation': e_ocp.get(), 'doc_num': e_doc.get(), 'issue_date': e_idate.get(), 'expiry_date': e_edate.get(), 'email': e_email.get(), 'salary': e_sal.get(), 'salary_cert': e_salc.get(), 'permanent_address': perm_add, 'present_address': pr_add}
 			db.child("People").child("Investor").push(data_good)	
 			user_pass_inves(e_email.get())
 			top_cain.destroy()
@@ -200,6 +200,12 @@ def open_caa_inves():
 		e_prpb.delete(0, END)
 		e_prst.delete(0, END)
 		e_prcnt.delete(0, END)
+
+	def sel():
+		if click_emp.get() == "Yes":
+			e_ocp.configure(state = "normal")
+		else:
+			e_ocp.config(state = "disabled")
 
 
 	global bg_cain
@@ -267,68 +273,82 @@ def open_caa_inves():
 	#e_pno.insert(0, "Phone Number")
 	e_pno_win = my_canvas.create_window(900, 275, window = e_pno)
 
-	my_canvas.create_text(100, 325, text = "Salary: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
+	my_canvas.create_text(100, 325, text = "Employed: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
+	click_emp = StringVar()
+	click_emp.set("Yes")
+	e_emp = OptionMenu(top_cain, click_emp, "Yes", "No")
+	e_emp_win = my_canvas.create_window(200, 325, window = e_emp)
+	select_but = Button(top_cain, text = "Select", command = sel, background = "white", highlightbackground = "black", highlightthickness = 2)
+	select_but_win = my_canvas.create_window(300, 325, window = select_but)
+
+	my_canvas.create_text(750, 325, text = "Occupation: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue" )
+	e_ocp = Entry(top_cain, width = 50, borderwidth = 2)
+	e_ocp.insert(0, "Nil")
+	e_ocp.config(state = "disabled")
+	e_ocp_win = my_canvas.create_window(975, 325, window = e_ocp)
+
+	my_canvas.create_text(100, 375, text = "Salary: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
 	e_sal = Entry(top_cain, width = 25, borderwidth = 2)
 	#e_sal.insert(0, "Salary")
-	e_sal_win = my_canvas.create_window(250, 325, window = e_sal)
+	e_sal_win = my_canvas.create_window(250, 375, window = e_sal)
 
-	my_canvas.create_text(750, 325, text = "Salary Certificate: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
+	my_canvas.create_text(750, 375, text = "Salary Certificate: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
 	e_salc = Entry(top_cain, width = 50, borderwidth = 2)
 	#e_salc.insert(0, "Salary Certificate")
-	e_salc_win = my_canvas.create_window(975, 325, window = e_salc)
+	e_salc_win = my_canvas.create_window(975, 375, window = e_salc)
 	salc_button = Button (top_cain, text = "Select", command = select, background = "white", highlightbackground = "black", highlightthickness = 2)
-	salc_button_win = my_canvas.create_window(1165, 325, window = salc_button)
+	salc_button_win = my_canvas.create_window(1165, 375, window = salc_button)
 	top_cain.grab_set()
 
-	my_canvas.create_text(250, 375, text = "Permanent Address ", font = ("Arial Rounded MT Bold", 15), fill = "steel blue")
+	my_canvas.create_text(250, 425, text = "Permanent Address ", font = ("Arial Rounded MT Bold", 15), fill = "steel blue")
 
-	my_canvas.create_text(100, 425, text = "Address: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
+	my_canvas.create_text(100, 475, text = "Address: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
 	e_peadd = Entry(top_cain, width = 50, borderwidth = 2)
 	#e_peadd.insert(0, "Permanent Address")
-	e_peadd_win = my_canvas.create_window(325, 425, window = e_peadd)
+	e_peadd_win = my_canvas.create_window(325, 475, window = e_peadd)
 
-	my_canvas.create_text(100, 475, text = "P.O. BOX: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
+	my_canvas.create_text(100, 525, text = "P.O. BOX: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
 	e_pepb = Entry(top_cain, width = 25, borderwidth = 2)
 	#e_pepb.insert(0, "P.O. Box")
-	e_pepb_win = my_canvas.create_window(250, 475, window = e_pepb)
+	e_pepb_win = my_canvas.create_window(250, 525, window = e_pepb)
 
-	my_canvas.create_text(100, 525, text = "State: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
+	my_canvas.create_text(100, 575, text = "State: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
 	e_pest = Entry(top_cain, width = 50, borderwidth = 2)
 	#e_pest.insert(0, "State")
-	e_pest_win = my_canvas.create_window(325, 525, window = e_pest)
+	e_pest_win = my_canvas.create_window(325, 575, window = e_pest)
 
-	my_canvas.create_text(100, 575, text = "Country: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
+	my_canvas.create_text(100, 625, text = "Country: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
 	e_pecnt = Entry(top_cain, width = 50, borderwidth = 2)
 	#e_pecnt.insert(0, "Country")
-	e_pecnt_win = my_canvas.create_window(325, 575, window = e_pecnt)
+	e_pecnt_win = my_canvas.create_window(325, 625, window = e_pecnt)
 
-	my_canvas.create_text(850, 375, text = "Present Address ", font = ("Arial Rounded MT Bold", 15), fill = "steel blue")
+	my_canvas.create_text(850, 425, text = "Present Address ", font = ("Arial Rounded MT Bold", 15), fill = "steel blue")
 
-	my_canvas.create_text(750, 425, text = "Address: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
+	my_canvas.create_text(750, 475, text = "Address: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
 	e_pradd = Entry(top_cain, width = 50, borderwidth = 2)
 	#e_pradd.insert(0, "Present Address")
-	e_pradd_win = my_canvas.create_window(975, 425, window = e_pradd)
+	e_pradd_win = my_canvas.create_window(975, 475, window = e_pradd)
 
-	my_canvas.create_text(750, 475, text = "P.O. BOX: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
+	my_canvas.create_text(750, 525, text = "P.O. BOX: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
 	e_prpb = Entry(top_cain, width = 25, borderwidth = 2)
 	#e_prpb.insert(0, "P.O. Box")
-	e_prpb_win = my_canvas.create_window(900, 475, window = e_prpb)
+	e_prpb_win = my_canvas.create_window(900, 525, window = e_prpb)
 
-	my_canvas.create_text(750, 525, text = "State: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
+	my_canvas.create_text(750, 575, text = "State: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
 	e_prst = Entry(top_cain, width = 50, borderwidth = 2)
 	#e_prst.insert(0, "State")
-	e_prst_win = my_canvas.create_window(975, 525, window = e_prst)
+	e_prst_win = my_canvas.create_window(975, 575, window = e_prst)
 
-	my_canvas.create_text(750, 575, text = "Country: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
+	my_canvas.create_text(750, 625, text = "Country: ", font = ("Arial Rounded MT Bold", 12), fill = "steel blue")
 	e_prcnt = Entry(top_cain, width = 50, borderwidth = 2)
 	#e_prcnt.insert(0, "Country")
-	e_prcnt_win = my_canvas.create_window(975, 575, window = e_prcnt)
+	e_prcnt_win = my_canvas.create_window(975, 625, window = e_prcnt)
 
 	next_button = Button (top_cain, text = "Next", command = next_but, background = "white", highlightbackground = "black", highlightthickness = 2)
-	next_button_win = my_canvas.create_window(900, 650, window = next_button)
+	next_button_win = my_canvas.create_window(900, 675, window = next_button)
 
 	goback_button = Button (top_cain, text = "Back", command = top_cain.destroy, background = "white", highlightbackground = "black", highlightthickness = 2)
-	goback_button_win = my_canvas.create_window(300, 650, window = goback_button)
+	goback_button_win = my_canvas.create_window(300, 675, window = goback_button)
 
 	res_button = Button (top_cain, text = "Reset Fields", command = clear, background = "white", highlightbackground = "black", highlightthickness = 2)
-	res_button_win = my_canvas.create_window(600, 650, window = res_button)
+	res_button_win = my_canvas.create_window(600, 675, window = res_button)
